@@ -2,3 +2,8 @@
   border: solid black 1px;
   margin: 70px;
 }
+
+.radioButton{
+  font-size: 1.6rem;
+  margin-top: 10px;
+}
