@@ -1,50 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-export default function Probintzia({ onProvinciaChange }) {
-  const [selectedProvincia, setSelectedProvintzia] = useState('');
+const Probintzia = ({ onProbintziaChange }) => {
+  const [selectedProbintzia, setSelectedProbintzia] = useState("");
 
-  const probintziaAukeratu = (e) => {
-    const probintzia = e.target.value;
-    setSelectedProvintzia(probintzia);
-
-    // Llamar a la función proporcionada por el padre
-    onProvinciaChange(probintzia);
+  const handleProbintziaChange = (e) => {
+    const selectedOption = e.target.value;
+    setSelectedProbintzia(selectedOption);
+    onProbintziaChange(selectedOption);
   };
- 
+
   return (
-    <>
-      <div className="border">
-        <h1>Probintzia</h1>
-        <label className="radioButton">
-          <input
-            type='radio'
-            value='Araba/Álava'
-            name='provincia'
-            onChange={probintziaAukeratu}
-          />
-          Araba/Álava
-        </label>
-        <br />
-        <label className="radioButton">
-          <input
-            type='radio'
-            value='Bizkaia'
-            name='provincia'
-            onChange={probintziaAukeratu}
-          />
-          Bizkaia
-        </label>
-        <br />
-        <label className="radioButton">
-          <input
-            type='radio'
-            value='Gipuzkoa'
-            name='provincia'
-            onChange={probintziaAukeratu}
-          />
-          Gipuzkoa
-        </label>
-      </div>
-    </>
+    <div className="border">
+      <h1>Probintzia</h1>
+      <label>
+        <input
+          type="radio"
+          value="Gipuzkoa"
+          checked={selectedProbintzia === "Gipuzkoa"}
+          onChange={handleProbintziaChange}
+        />
+        Gipuzkoa
+      </label>
+      <label>
+        <input
+          type="radio"
+          value="Bizkaia"
+          checked={selectedProbintzia === "Bizkaia"}
+          onChange={handleProbintziaChange}
+        />
+        Bizkaia
+      </label>
+      <label>
+        <input
+          type="radio"
+          value="Araba/Alava"
+          checked={selectedProbintzia === "Araba/Alava"}
+          onChange={handleProbintziaChange}
+        />
+        Araba/Alava
+      </label>
+    </div>
   );
-}
+};
+
+export default Probintzia;

@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
-import Probintzia from './Probintzia';
-import Udalerria from './Udalerria';
+import React, { useState } from "react";
+import Probintzia from "./Probintzia";
+import Udalerria from "./Udalerria";
 
-export default function Main() {
-  const [selectedProvincia, setSelectedProvincia] = useState('');
+const Main = () => {
+  const [probintzia, setProbintzia] = useState("");
 
-  const handleProvinciaChange = (provincia) => {
-    setSelectedProvincia(provincia);
+  const handleProbintziaChange = (selectedProbintzia) => {
+    setProbintzia(selectedProbintzia);
   };
 
   return (
-    <div>
-      <Probintzia onProvinciaChange={handleProvinciaChange} />
-      <Udalerria selectedProvincia={selectedProvincia} />
+    <div className="border">
+      <h1>Main</h1>
+
+      <Probintzia onProbintziaChange={handleProbintziaChange} />
+
+      <Udalerria selectedProbintzia={probintzia} />
     </div>
   );
-}
+};
+
+export default Main;

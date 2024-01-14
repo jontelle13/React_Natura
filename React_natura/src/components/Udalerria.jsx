@@ -1,35 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 
-export default function Udalerria({ selectedProvincia }) {
-  const [municipios, setMunicipios] = useState([]);
+const Udalerria = ({ selectedProbintzia }) => {
+  const [udalerriak, setUdalerriak] = useState([]);
 
   useEffect(() => {
-    // Aquí debes realizar la solicitud Ajax usando el valor de selectedProvincia
-    // y actualizar el estado de municipios con los datos recibidos.
-    // Puedes usar la función fetch o cualquier otra biblioteca de manejo de Ajax.
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://opendata.euskadi.eus/contenidos/ds_recursos_turisticos/espacios_naturales_euskadi/opendata/espacios-naturales.json"
+        );
 
-    // Ejemplo de solicitud usando fetch:
-    if (selectedProvincia) {
-      fetch(`URL_DEL_PHP?provincia=${selectedProvincia}`)
-        .then(response => response.json())
-        .then(data => {
-          // Actualizar el estado de municipios con los datos recibidos
-          setMunicipios(data.item.map(item => item.municipality));
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }
-  }, [selectedProvincia]);
+        if (!response.ok) {
+          throw new Error("Error fetching data");
+        }
+
+        const data = await response.json();
+        const parkeak = data.espacios_naturales;
+
+        const udalerriakArray = parkeak.map((parkea) => parkea.territory);
+        setUdalerriak(udalerriakArray);
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <>
-      <div className="border">
-        <h1>Udalerria</h1>
-        <ul>
-          {municipios.map((municipio, index) => (
-            <li key={index}>{municipio}</li>
-          ))}
-        </ul>
-      </div>
-    </>
+    <div className="border">
+      <h1>Udalerria</h1>
+      {selectedProbintzia && (
+        <div>
+          <p>{selectedProbintzia} Probintzian dauden udalerriak:</p>
+          <select>
+            {udalerriak.map((udalerri, index) => (
+              <option key={index}>{udalerri}</option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
   );
-}
+};
+
+export default Udalerria;
